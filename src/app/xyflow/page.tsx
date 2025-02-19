@@ -28,16 +28,6 @@ const initialNodes = (function () {
   return nodes;
 })();
 
-console.log(initialNodes);
-
-// const initialNodes = [
-//   {
-//     id: "node-1",
-//     type: "textUpdater",
-//     position: { x: 0, y: 0 },
-//     data: { value: 123 },
-//   },
-// ];
 // we define the nodeTypes outside of the component to prevent re-renderings
 // you could also use useMemo inside the component
 const nodeTypes = { textUpdater: CustomNode };

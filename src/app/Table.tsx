@@ -3,7 +3,7 @@ import { getRandomData } from "./data";
 
 export default function Table() {
   const data = useMemo(() => {
-    return getRandomData(20);
+    return getRandomData(200);
   }, []);
   const columns = Object.keys(data[0]);
   return (
