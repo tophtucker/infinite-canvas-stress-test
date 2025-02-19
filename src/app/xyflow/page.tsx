@@ -11,14 +11,33 @@ import "@xyflow/react/dist/style.css";
 
 import CustomNode from "./CustomNode";
 
-const initialNodes = [
-  {
-    id: "node-1",
-    type: "textUpdater",
-    position: { x: 0, y: 0 },
-    data: { value: 123 },
-  },
-];
+const initialNodes = (function () {
+  const n = 100;
+  const w = 500;
+  const h = 800;
+  const cols = Math.sqrt(n);
+  const nodes = [];
+  for (let i = 0; i < n; i++) {
+    nodes.push({
+      id: `node-${i}`,
+      type: "textUpdater",
+      position: { x: (i % cols) * w, y: ~~(i / cols) * h },
+      // data: { value: 123 },
+    });
+  }
+  return nodes;
+})();
+
+console.log(initialNodes);
+
+// const initialNodes = [
+//   {
+//     id: "node-1",
+//     type: "textUpdater",
+//     position: { x: 0, y: 0 },
+//     data: { value: 123 },
+//   },
+// ];
 // we define the nodeTypes outside of the component to prevent re-renderings
 // you could also use useMemo inside the component
 const nodeTypes = { textUpdater: CustomNode };
