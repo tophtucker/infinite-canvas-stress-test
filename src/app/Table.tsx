@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { getRandomData } from "./data";
 
-export default function Table() {
+export default function Table({ style } = { style: {} }) {
   const data = useMemo(() => {
     return getRandomData(20);
   }, []);
@@ -13,6 +13,7 @@ export default function Table() {
         border: "1px solid black",
         borderRadius: 5,
         borderCollapse: "collapse",
+        ...style,
       }}
     >
       <thead>

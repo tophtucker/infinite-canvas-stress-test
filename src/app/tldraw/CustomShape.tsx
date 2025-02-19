@@ -61,7 +61,7 @@ export class MyShapeUtil extends ShapeUtil<ICustomShape> {
   component(shape: ICustomShape) {
     return (
       <HTMLContainer style={{ backgroundColor: "#efefef" }}>
-        <Table />
+        <Table style={{ width: shape.props.w, height: shape.props.h }} />
       </HTMLContainer>
     );
   }

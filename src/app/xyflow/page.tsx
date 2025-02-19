@@ -49,6 +49,8 @@ function Flow() {
     [setEdges],
   );
 
+  console.log("time", Date.now());
+
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
