@@ -1,7 +1,13 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { createTLStore, defaultShapeUtils, loadSnapshot, Tldraw } from "tldraw";
+import {
+  createTLStore,
+  defaultShapeUtils,
+  Editor,
+  loadSnapshot,
+  Tldraw,
+} from "tldraw";
 import "tldraw/tldraw.css";
 import { MyShapeUtil } from "./CustomShape";
 
@@ -59,7 +65,7 @@ const snapshot = (function () {
   const n = 100;
   const w = 500;
   const h = 800;
-  const cols = Math.sqrt(n);
+  const cols = Math.floor(Math.sqrt(n));
   const store = { ...baseStore };
   for (let i = 0; i < n; i++) {
     const id = `shape:s${i}`;
@@ -90,10 +96,11 @@ export default function App() {
     return newStore;
   });
 
-  const onMount = useCallback(
-    (editor) => void editor.setCurrentTool("hand"),
-    [],
-  );
+  const onMount = useCallback((editor: Editor) => {
+    editor.setCurrentTool("hand");
+    const cameraOptions = editor.getCameraOptions();
+    editor.setCameraOptions({ ...cameraOptions, zoomSpeed: 2 });
+  }, []);
 
   return (
     <div style={{ position: "fixed", inset: 0 }}>

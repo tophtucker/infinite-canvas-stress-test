@@ -15,7 +15,7 @@ const initialNodes = (function () {
   const n = 100;
   const w = 500;
   const h = 800;
-  const cols = Math.sqrt(n);
+  const cols = Math.floor(Math.sqrt(n));
   const nodes = [];
   for (let i = 0; i < n; i++) {
     nodes.push({
@@ -48,8 +48,6 @@ function Flow() {
     (connection) => setEdges((eds) => addEdge(connection, eds)),
     [setEdges],
   );
-
-  console.log("time", Date.now());
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
