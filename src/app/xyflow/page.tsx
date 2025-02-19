@@ -59,6 +59,8 @@ function Flow() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         fitView
+        minZoom={0.01}
+        maxZoom={2}
       />
     </div>
   );
