@@ -1,7 +1,7 @@
-import { useMemo } from "react";
+import { CSSProperties, useMemo } from "react";
 import { getRandomData } from "./data";
 
-export default function Table({ style } = { style: {} }) {
+export default function Table({ style = {} }: { style?: CSSProperties }) {
   const data = useMemo(() => {
     return getRandomData(20);
   }, []);
@@ -36,7 +36,7 @@ export default function Table({ style } = { style: {} }) {
                 key={col}
                 style={{ border: "1px solid black", padding: "2px 4px" }}
               >
-                {d[col]}
+                {d[col as keyof typeof d]}
               </td>
             ))}
           </tr>
