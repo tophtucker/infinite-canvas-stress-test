@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { Suspense, useCallback, useState } from "react";
 import {
   createTLStore,
   defaultShapeUtils,
@@ -87,7 +87,7 @@ const getSnapshot = function (n: number) {
   return { store, schema };
 };
 
-export default function Page() {
+function InnerPage() {
   const searchParams = useSearchParams();
   const n = searchParams.has("n") ? Number(searchParams.get("n")) : 100;
 
@@ -110,5 +110,13 @@ export default function Page() {
     <div style={{ position: "fixed", inset: 0 }}>
       <Tldraw store={store} shapeUtils={[MyShapeUtil]} onMount={onMount} />
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense>
+      <InnerPage />
+    </Suspense>
   );
 }

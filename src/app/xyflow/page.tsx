@@ -4,6 +4,7 @@ import { ReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import CustomNode from "./CustomNode";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const getInitialNodes = function (n: number) {
   const w = 500;
@@ -23,7 +24,7 @@ const getInitialNodes = function (n: number) {
 
 const nodeTypes = { customNode: CustomNode };
 
-export default function Page() {
+function InnerPage() {
   const searchParams = useSearchParams();
   const n = searchParams.has("n") ? Number(searchParams.get("n")) : 100;
   const nodes = getInitialNodes(n);
@@ -40,5 +41,13 @@ export default function Page() {
         maxZoom={2}
       />
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense>
+      <InnerPage />
+    </Suspense>
   );
 }
