@@ -10,6 +10,7 @@ import {
 } from "tldraw";
 import "tldraw/tldraw.css";
 import { MyShapeUtil } from "./CustomShape";
+import { useSearchParams } from "next/navigation";
 
 const schema = {
   schemaVersion: 2,
@@ -42,7 +43,7 @@ const schema = {
     "com.tldraw.shape.video": 2,
     "com.tldraw.binding.arrow": 0,
   },
-};
+} as const;
 
 const baseStore = {
   "document:document": {
@@ -59,10 +60,9 @@ const baseStore = {
     index: "a1",
     typeName: "page",
   },
-};
+} as const;
 
-const snapshot = (function () {
-  const n = 100;
+const getSnapshot = function (n: number) {
   const w = 500;
   const h = 800;
   const cols = Math.floor(Math.sqrt(n));
@@ -85,14 +85,18 @@ const snapshot = (function () {
     };
   }
   return { store, schema };
-})();
+};
 
-export default function App() {
+export default function Page() {
+  const searchParams = useSearchParams();
+  const n = searchParams.has("n") ? Number(searchParams.get("n")) : 100;
+
+  // does this need to be in useState? idk
   const [store] = useState(() => {
     const newStore = createTLStore({
       shapeUtils: [...defaultShapeUtils, MyShapeUtil],
     });
-    loadSnapshot(newStore, snapshot);
+    loadSnapshot(newStore, getSnapshot(n));
     return newStore;
   });
 

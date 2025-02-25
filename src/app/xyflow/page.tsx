@@ -1,18 +1,11 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import {
-  ReactFlow,
-  addEdge,
-  applyEdgeChanges,
-  applyNodeChanges,
-} from "@xyflow/react";
+import { ReactFlow } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-
 import CustomNode from "./CustomNode";
+import { useSearchParams } from "next/navigation";
 
-const initialNodes = (function () {
-  const n = 100;
+const getInitialNodes = function (n: number) {
   const w = 500;
   const h = 800;
   const cols = Math.floor(Math.sqrt(n));
@@ -20,43 +13,27 @@ const initialNodes = (function () {
   for (let i = 0; i < n; i++) {
     nodes.push({
       id: `node-${i}`,
-      type: "textUpdater",
+      type: "customNode",
       position: { x: (i % cols) * w, y: ~~(i / cols) * h },
       // data: { value: 123 },
     });
   }
   return nodes;
-})();
+};
 
-// we define the nodeTypes outside of the component to prevent re-renderings
-// you could also use useMemo inside the component
-const nodeTypes = { textUpdater: CustomNode };
+const nodeTypes = { customNode: CustomNode };
 
-function Flow() {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState([]);
-
-  const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    [setNodes],
-  );
-  const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    [setEdges],
-  );
-  const onConnect = useCallback(
-    (connection) => setEdges((eds) => addEdge(connection, eds)),
-    [setEdges],
-  );
+export default function Page() {
+  const searchParams = useSearchParams();
+  const n = searchParams.has("n") ? Number(searchParams.get("n")) : 100;
+  const nodes = getInitialNodes(n);
+  const edges = [];
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
         nodeTypes={nodeTypes}
         fitView
         minZoom={0.01}
@@ -65,5 +42,3 @@ function Flow() {
     </div>
   );
 }
-
-export default Flow;

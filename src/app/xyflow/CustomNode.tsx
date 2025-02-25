@@ -10,26 +10,8 @@ function CustomNode({ data, isConnectable }) {
   }, []);
 
   return (
-    <div className="text-updater-node">
-      <Handle
-        type="target"
-        position={Position.Top}
-        isConnectable={isConnectable}
-      />
+    <div>
       <Table />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        id="a"
-        style={handleStyle}
-        isConnectable={isConnectable}
-      />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        id="b"
-        isConnectable={isConnectable}
-      />
     </div>
   );
 }
